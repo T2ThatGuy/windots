@@ -5,7 +5,7 @@ Opinionated dotfiles for windows systems
 Only a single theme is currently available is Catppuccin (Frappe)
 
 # Todo
-- [] Install apps script (via winget & scoop)
+- [x] Install apps script (via winget & scoop)
 - [] Copy utilities for setting up .config and other dirs / files
 
 # Configs to create
