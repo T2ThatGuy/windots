@@ -7,5 +7,7 @@ if ($decision -eq 0) {
     $dryrun = $false
 }
 
-& "$PSScriptRoot\scripts\install-apps.ps1"
-& "$PSScriptRoot\scripts\copy-config.ps1"
+$scriptDir = "$PSscriptRoot\scripts"
+& "$scriptDir/install-apps.ps1"
+& "$scriptDir/copy-config.ps1"
+& "$scriptDir/first-time-setup.ps1"
