@@ -2,7 +2,7 @@
 Opinionated dotfiles for windows systems
 
 # Themes
-Only a single theme is currently available is Catppuccin (Frappe)
+Only a single theme is currently available being Catppuccin (Frappe)
 
 # Todo
 - [x] Install apps script (via winget & scoop)
