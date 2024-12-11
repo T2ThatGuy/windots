@@ -15,7 +15,7 @@ Write-Host "Adding "$workspaceFile" to "$glazewmConfigLocation
 if ($dryrun -eq $True) {
     Write-Host "- Skipping write. Reason: Dry run enabled"
 } else {
-    Add-Content -Path "$home/.glzr/glazewm/config.yaml" -Value Get-Content $workspaceFile | out-null
+    Add-Content -Path "$home/.glzr/glazewm/config.yaml" -Value $(Get-Content $workspaceFile) | out-null
 }
 
 Write-Host "--- Perfoming setup for zebar"
@@ -33,13 +33,13 @@ if ($dryrun -eq $False) {
     }
 
     Write-Host "-- Chaging directory to"$zebarLocation
-    Set-Location -Value $zebarAppLocation | out-null
+    Set-Location $zebarAppLocation | out-null
 
     npm ci
     npm run build
 
     Write-Host "-- Changing directory back to scripts directory"
-    Set-Location -Value "$scriptDir/.." | out-null
+    Set-Location "$scriptDir/.." | out-null
 } else {
     Write-Host "- Skipping zebar setup. Reason: Dry run enabled"
 }
