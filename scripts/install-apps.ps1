@@ -4,6 +4,7 @@ $wingetDeps = @(
 
 $scoopDeps = @(
     "neovim"
+    "fastfetch"
     "fzf"
     "eza"
     "zoxide"
