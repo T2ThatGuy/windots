@@ -1,0 +1,113 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ------------------------------------------------
+#                    starship
+# ------------------------------------------------
+add_newline = false
+format = """\
+(bold green)$directory$package\
+$all$character"""
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+# ------------------------------------------------
+#                   os things
+# ------------------------------------------------
+[os.symbols]
+Amazon = " "
+Arch = " "
+Linux = " "
+Raspbian = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+
+[directory]
+read_only = " 󰌾"
+use_os_path_sep = true
+truncation_length = 6
+
+[hostname]
+ssh_symbol = " "
+
+# ------------------------------------------------
+#                  infrastructure
+# ------------------------------------------------
+[aws]
+symbol = "  "
+
+[docker_context]
+symbol = " "
+
+[package]
+disabled = false
+symbol = "󰏗 "
+format = "is [$symbol$version]($style) "
+
+# ------------------------------------------------
+#                      git
+# ------------------------------------------------
+[fossil_branch]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+
+# ------------------------------------------------
+#                   languages
+# ------------------------------------------------
+[c]
+symbol = " "
+
+[java]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[nodejs]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[bun]
+symbol = "🍞 "
+
+
+# ------------------------------------------------
+#                disabled modules
+# ------------------------------------------------
+[azure]
+disabled = true
+
+[battery]
+disabled = true
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+
+[[battery.display]]
+threshold = 100
+style = 'bold white'
+
+[buf]
+disabled = true
+
+[cmake]
+disabled = true
+
+[cobol]
+disabled = true
