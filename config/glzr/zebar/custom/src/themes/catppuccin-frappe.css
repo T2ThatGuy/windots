@@ -1,0 +1,53 @@
+/* Frappe (Dark Theme) */
+:root {
+    --max-height: 40px;
+
+    /* Font */
+    --font-name: 'Hack Nerd Font Mono';
+    --font-size: 14px;
+    --font-weight: 500;
+
+    /* border */
+    --border-radius: 8px; /* Windows 11 default is 8px borders */
+    --border-size: 0.125rem;
+
+    /* Margin */
+    --outer-margin-s: 5px;
+    --outer-margin-t: 5px;
+    --outer-margin-e: 5px;
+    --outer-margin-b: 0px;
+
+    /* shadow */
+    --shadow-size-bar: 0;
+    --shadow-size-button: 0;
+
+    /* Colours */
+    --text: 227, 70%, 87%;
+    --bg: 230, 16%, 30%;       /* Surface 0 */
+    --border: 229, 20%, 17%;   /* Crust */
+    --shadow: 231, 19%, 20%;   /* Mantle */
+
+    /* Icon Colours */
+    --icon: 199, 55%, 69%;             /* Red */
+    --memory: 277, 59%, 76%;           /* Mauve */
+    --memory-modr-usg: 277, 59%, 76%;  /* Mauve */
+    --memory-high-usg: 277, 59%, 76%;  /* Mauve */
+    --cpu: 316, 73%, 84%;              /* Pink */
+    --cpu-modr-usg: 20, 79%, 70%;      /* Peach */
+    --cpu-high-usg: 359, 68%, 71%;     /* Red */
+    --battery-full: 96, 44%, 68%;      /* Green */
+    --battery-half: 20, 79%, 70%;      /* Peach */
+    --battery-empt: 359, 68%, 71%;     /* Red */
+    --tiling-direction: 239, 66%, 84%; /* Lavender */
+    --network: 227, 70%, 87%;          /* Text */
+    --weather: 227, 70%, 87%;          /* Text */
+
+    /* Workspace Colours */
+    --ws-active: 20, 79%, 70%;  /* Peach */
+    --ws-deactive: 359, 68%, 71%; /* Red */
+
+    /* Process Colours */
+    --process: 228, 13%, 44%;          /* Surface 2 */
+    --focused-process: 227, 70%, 87%;  /* Text */
+    --displayed: 227, 70%, 87%;        /* Text */
+}
