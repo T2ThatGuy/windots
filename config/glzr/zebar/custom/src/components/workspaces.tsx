@@ -6,10 +6,6 @@ export default function Workspaces() {
 
     return (
         <div className="flex flex-row gap-2">
-            {/* {glazewm?.currentWorkspaces?.map((workspace) => (
-                <span key={workspace.id}>{workspace.name}</span>
-            ))} */}
-
             {glazewm?.currentWorkspaces?.map((workspace) => (
                 <div
                     key={workspace.id}

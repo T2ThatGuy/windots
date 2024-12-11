@@ -11,12 +11,6 @@ export default function Group({
     innerClass: string;
 }) {
     return (
-        // <div
-        //     className={cn(
-        //         'flex w-fit h-full items-center bg-bar-bg p-1 border border-bar-border rounded-base',
-        //         `justify-self-${alignment}`
-        //     )}
-        // >
         <div
             className={cn(
                 'flex w-fit h-full items-center p-1',
