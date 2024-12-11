@@ -8,7 +8,7 @@ end
 
 config.color_scheme = "Catppuccin Frappe"
 config.font_size = 14
-config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" })
+config.font = wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.window_background_opacity = 0.95
 -- config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
