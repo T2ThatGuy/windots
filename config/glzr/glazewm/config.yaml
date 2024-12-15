@@ -117,9 +117,7 @@ window_rules:
 
       # Ignore rules for Custom Apps
       - window_title: { equals: 'VoiceMeeter' }
-
-      # All this to block / ignore Call of Duty
-      - window_title: { regex: '[^\x00-\x7F]*C[^\x00-\x7F]*a[^\x00-\x7F]*l[^\x00-\x7F]*l[^\x00-\x7F]*\s*[^\x00-\x7F]*o[^\x00-\x7F]*f[^\x00-\x7F]*\s*[^\x00-\x7F]*D[^\x00-\x7F]*u[^\x00-\x7F]*t[^\x00-\x7F]*y[^\x00-\x7F]*.*' }
+      - window_process: { equals: 'cod' }
 
   - commands: ['move --workspace 9']
     match:
