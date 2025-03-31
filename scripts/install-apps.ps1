@@ -8,12 +8,15 @@ $scoopDeps = @(
     "fzf"
     "eza"
     "zoxide"
-    "wezterm"
+    "extras/wezterm"
     "Flow-Launcher"
+    "gh"
+    "starship"
+    "extras/everything"
 )
 
 $scoopBuckets = @(
-    "extras" # <--  WezTerm
+    "extras"
 )
 
 Write-Host "--- Installing missing dependencies (Winget)"
