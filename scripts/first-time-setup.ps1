@@ -4,11 +4,11 @@ $zebarEnvLocation = "$zebarAppLocation/.env"
 
 
 Write-Host "--- Performing further setup for glazewm"
-$decision = $Host.UI.PromptForChoice('To get the intended workspace setup', 'How many monitors are expected?', @('&2', '&3'), 1)
-if ($decision -eq 0) {
-    $workspaceFile = "$home/.glzr/glazewm/workspaces-2-monitors.yaml"
-} else {
-    $workspaceFile = "$home/.glzr/glazewm/workspaces-3-monitors.yaml"
+$decision = $Host.UI.PromptForChoice('To get the intended workspace setup', 'How many monitors are expected?', @('&1', '&2', '&3'), 2)
+switch ($decision) {
+    0 { $workspaceFile = "$home/.glzr/glazewm/workspaces-1-monitors.yaml" }
+    1 { $workspaceFile = "$home/.glzr/glazewm/workspaces-2-monitors.yaml" }
+    2 { $workspaceFile = "$home/.glzr/glazewm/workspaces-3-monitors.yaml" }
 }
 
 Write-Host "Adding "$workspaceFile" to "$glazewmConfigLocation
