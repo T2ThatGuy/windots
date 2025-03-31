@@ -32,7 +32,7 @@ foreach ($file in $files.GetEnumerator()) {
 Write-Host "--- Copying config (folders)"
 foreach ($folder in $folders.GetEnumerator()) {
     if ($dryrun -eq $True) {
-        Write-Host "- Skipping folder"$file.key". Reason: Dry run enabled"
+        Write-Host "- Skipping folder"$folder.key". Reason: Dry run enabled"
         continue
     }
 
