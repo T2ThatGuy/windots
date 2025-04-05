@@ -49,7 +49,7 @@ function SetupUbuntu {
 }
 
 Write-Host "--- Performing setup for WSL (Ubuntu 24.04)"
-$decision = $Host.UI.PromptForChoice('Confirmation', 'Would you like to proceed with the installation?', @('&Yes', '&No'), 1)
+$decision = $Host.UI.PromptForChoice('Confirmation', 'Would you like to proceed with WSL installation and setup?', @('&Yes', '&No'), 1)
 
 if ($decision -eq 0) {
     InstallWSL
