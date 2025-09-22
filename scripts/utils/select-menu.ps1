@@ -6,7 +6,7 @@ function Get-SelectMenuChoice {
     )
 
     if ($Options.Length -le 1) {
-        Write-Host "Provide at least two options to utilise select menus"
+        Write-LogWarning "Provide at least two options to utilise select menus"
         return ,@()
     }
 
@@ -19,7 +19,7 @@ function Use-MultiSelectMenu {
         [string[]]$Options
     )
 
-    Write-Host "Use UP/DOWN to move, Space to toggle, Enter to confirm.`n"
+    Write-Host "`nUse UP/DOWN to move, Space to toggle, Enter to confirm."
 
     $selected = @{}
     for ($i = 0; $i -lt $Options.Count; $i++) {
@@ -60,7 +60,7 @@ function Use-SelectMenu {
         [string[]]$Options
     )
 
-    Write-Host "Use UP/DOWN to move, Enter to select.`n"
+    Write-Host "`nUse UP/DOWN to move, Enter to select."
 
     $cursorPos = 0
     $menuTop = [System.Console]::CursorTop
