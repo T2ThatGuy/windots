@@ -7,13 +7,13 @@ $apps = @(
     "fzf"
     "eza"
     "zoxide"
-    "extras/wezterm"
     "Flow-Launcher"
     "gh"
     "starship"
-    "extras/everything"
-    "extras/glazewm"
     "extras/zebar"
+    "extras/glazewm"
+    "extras/wezterm"
+    "extras/everything"
 )
 
 $buckets = @(
@@ -54,7 +54,7 @@ function Install-ScoopBuckets {
 
 function Get-ScoopInstalled {
     try {
-        scoop list
+        scoop list *> $null
         return $true
     }
     catch [System.Management.Automation.CommandNotFoundException] {
@@ -68,8 +68,13 @@ function Get-ScoopInstalled {
 }
 
 function Install-Scoop {
-    if (Get-ScoopInstalled -not) {
+    if (-not $(Get-ScoopInstalled)) {
         Write-LogInfo "Starting scoop download process"
+
+        if ($dryrun -eq $true) {
+            Write-LogInfo "Skipping scoop install. Reason: Dry run enabled"
+            return
+        }
 
         # See quickstart guide at https://scoop.sh/#/ for more information on below
         Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
