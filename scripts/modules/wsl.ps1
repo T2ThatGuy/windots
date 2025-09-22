@@ -1,3 +1,5 @@
+# TODO: Refactor WSL setup
+
 function InstallWSL {
     Write-Host "-- Installing WSL"
     if ($dryrun -eq $true) {
