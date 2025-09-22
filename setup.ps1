@@ -1,18 +1,24 @@
-Import-Module "$PSscriptRoot/scripts/utils/logging.ps1" -Scope Local -Force
-
 $global:LogLevel = 0
 $global:dryrun = $false
 
+$global:ProjectRoot = $PSscriptRoot
 $global:ScriptsDirectory = "$PSscriptRoot/scripts"
 $global:UtilDirectory = "$ScriptsDirectory/utils"
+$global:ModuleDirectory = "$ScriptsDirectory/modules"
+
+Import-Module "$UtilDirectory/logging.ps1" -Scope Local -Force
+Import-Module "$UtilDirectory/select-menu.ps1" -Scope Local -Force
 
 # Ask if this run should be a dry run or not (default Yes)
 $decision = $Host.UI.PromptForChoice('', 'Perform dryrun?', @('&Yes', '&No'), 0)
 if ($decision -eq 0) { $global:dryrun = $true }
 
+# Invoke default setup process
+&{ . "$ModuleDirectory/scoop.ps1"; Install-Scoop }
+&{ . "$ModuleDirectory/config.ps1"; Copy-Configs }
 
-# $scriptDir = "$PSscriptRoot\scripts"
-# & "$scriptDir/install-apps.ps1"
-# & "$scriptDir/copy-config.ps1"
-# & "$scriptDir/first-time-setup.ps1"
-# & "$scriptDir/setup-wsl.ps1"
+foreach ($postScript in Get-ChildItem "$ModuleDirectory/post-config" -Filter *.ps1) {
+    Write-LogInfo "Found post script $postScript. Attempting to run Invoke-PostSetup"
+    Write-LogDebug "Full path: $($postScript.FullName)"
+    &{ . $postScript.FullName; Invoke-PostSetup }
+}
