@@ -39,7 +39,7 @@ function Copy-Configs {
         Copy-ConfigFile -Src $src -Destination $destination
     }
 
-    foreach ($folder in $appConfigFolders) {
+    foreach ($folder in $appConfigFolders.Values) {
         $src, $destination = $folder
         Copy-ConfigFolder -Src $src -Destination $destination
     }
