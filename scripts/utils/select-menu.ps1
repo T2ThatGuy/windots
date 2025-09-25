@@ -11,7 +11,16 @@ function Get-SelectMenuChoice {
     }
 
     Write-Host $Title
-    if ($MultiSelect) { return Use-MultiSelectMenu -Options $Options } else { return Use-SelectMenu -Options $Options }
+    [System.Console]::CursorVisible = $false
+
+    if ($MultiSelect) {
+        $selected = Use-MultiSelectMenu -Options $Options
+    } else {
+        $selected = Use-SelectMenu -Options $Options
+    }
+
+    [System.Console]::CursorVisible = $true
+    return $selected
 }
 
 function Use-MultiSelectMenu {
@@ -27,31 +36,49 @@ function Use-MultiSelectMenu {
     }
 
     $cursorPos = 0
-    $menuTop = [System.Console]::CursorTop
+    $menuTop = Get-MenuTop
 
-    :complete while ($true) {
-        [System.Console]::SetCursorPosition(0, $menuTop)
-
-        for ($i = 0; $i -lt $Options.Count; $i++) {
-            $writeOptionParams = @{
-                Choice = $Options[$i]
-                Hovered = $i -eq $cursorPos
-                Selected = $selected[$i]
-                DisplayBox = $true
-            }
-
-            Write-Option @writeOptionParams
+    # Draw initial menu
+    for ($i = 0; $i -lt $Options.Count; $i++) {
+        $writeOptionParams = @{
+            Choice = $Options[$i]
+            Hovered = $i -eq $cursorPos
+            LineNumber = $menuTop + $i
+            Selected = $selected[$i]
+            DisplayBox = $true
         }
 
+        Write-Option @writeOptionParams
+    }
+
+    :complete while ($true) {
         $key = [System.Console]::ReadKey($true)
+        $prevCursorPos = $cursorPos
         $cursorPos = Update-CursorPosition -Pos $cursorPos -Key $key -Limit $($Options.Count - 1)
 
         switch ($key.Key) {
             "Spacebar"  { $selected[$cursorPos] = -not $selected[$cursorPos] }
             "Enter"     { if ($selected.Values -contains $true) { break complete } }
         }
+
+        # Update menu after key press, only need previous and
+        # current cursor positions updating
+
+        foreach ($updatePos in @($prevCursorPos, $cursorPos)) {
+            $writeOptionParams = @{
+                Choice = $Options[$updatePos]
+                Hovered = $updatePos -eq $cursorPos
+                LineNumber = $menuTop + $updatePos
+                Selected = $selected[$updatePos]
+                DisplayBox = $true
+            }
+
+            Write-Option @writeOptionParams
+        }
+
     }
 
+    [System.Console]::SetCursorPosition(0, $menuTop + $Options.Count)
     return ($selected.GetEnumerator() | Where-Object Value | ForEach-Object { $Options[$_.Key] })
 }
 
@@ -63,22 +90,46 @@ function Use-SelectMenu {
     Write-Host "`nUse UP/DOWN to move, Enter to select."
 
     $cursorPos = 0
-    $menuTop = [System.Console]::CursorTop
+    $menuTop = Get-MenuTop
 
-    :complete while ($true) {
-        [System.Console]::SetCursorPosition(0, $menuTop)
-
-        for ($i = 0; $i -lt $Options.Count; $i++) {
-            Write-Option -Choice $Options[$i] -Hovered $($i -eq $cursorPos)
+    # Draw initial menu
+    for ($i = 0; $i -lt $Options.Count; $i++) {
+        $writeOptionParams = @{
+            Choice = $Options[$i]
+            Hovered = $i -eq $cursorPos
+            LineNumber = $menuTop + $i
         }
 
+        Write-Option @writeOptionParams
+    }
+
+
+    :complete while ($true) {
         $key = [System.Console]::ReadKey($true)
+        $prevCursorPos = $cursorPos
         $cursorPos = Update-CursorPosition -Pos $cursorPos -Key $key -Limit $($Options.Count - 1)
 
         switch ($key.Key) {
-            "Enter" { return ,@(($Options[$cursorPos])) }
+            "Enter" { break complete }
+        }
+
+        # Update menu after key press, only need previous and
+        # current cursor positions updating if they are not equal
+
+        if ($prevCursorPos -eq $cursorPos) { continue }
+        foreach ($updatePos in @($prevCursorPos, $cursorPos)) {
+            $writeOptionParams = @{
+                Choice = $Options[$updatePos]
+                Hovered = $updatePos -eq $cursorPos
+                LineNumber = $menuTop + $updatePos
+            }
+
+            Write-Option @writeOptionParams
         }
     }
+   
+    [System.Console]::SetCursorPosition(0, $menuTop + $Options.Count)
+    return ,@(($Options[$cursorPos]))
 }
 
 function Update-CursorPosition {
@@ -107,9 +158,12 @@ function Write-Option {
     param (
         [string]$Choice,
         [bool]$Hovered,
+        [double]$LineNumber,
         [bool]$Selected = $false,
         [bool]$DisplayBox = $false
     )
+
+    [System.Console]::SetCursorPosition(0, $LineNumber)
 
     $prefix = if ($DisplayBox) { if ($Selected) { "[x]" } else { "[ ]" } } else { "" }
     if ($prefix -ne "") {
@@ -117,8 +171,25 @@ function Write-Option {
     }
 
     if ($Hovered) {
-        Write-Host " > $prefix$Choice" -ForegroundColor Cyan
+        $prevColour = [System.Console]::ForegroundColor
+        [System.Console]::ForegroundColor = "Cyan"
+        [System.Console]::Write(" > $prefix$Choice")
+        [System.Console]::ForegroundColor = $prevColour
     } else {
-        Write-Host "   $prefix$Choice"
+        [System.Console]::Write("   $prefix$Choice")
     }
+}
+
+function Get-MenuTop {
+    $menuTop = [System.Console]::CursorTop
+
+    $windowHeight = [System.Console]::WindowHeight
+    $maxRows = $menuTop + $Options.Count
+
+    if ($maxRows -ge $windowHeight) {
+        [System.Console]::Write("`n" * ($maxRows - $windowHeight + 1))
+        $menuTop = [System.Console]::CursorTop - $Options.Count
+    }
+
+    return $menuTop
 }
