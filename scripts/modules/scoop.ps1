@@ -1,3 +1,5 @@
+# TODO: Post-Install script for glazewm to update scoop shim to a location within Program Files
+
 Import-Module "$UtilDirectory/logging.ps1" -Scope Local
 Import-Module "$UtilDirectory/select-menu.ps1" -Scope Local
 
